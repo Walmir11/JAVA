@@ -1,0 +1,56 @@
+public class ListaCircular<T> {
+    public No<T> cursor;
+    public int tamanho;
+
+    public ListaCircular() {
+        this.cursor = null;
+        this.tamanho = 0;
+    }
+
+    public void add(T elemento){
+        No<T> no = new No<T>(elemento);
+        if(cursor == null){
+            no.setProximo(no);
+            cursor = no;
+        }else {
+            no.setProximo(cursor.getProximo());
+            cursor.setProximo(no);
+        }
+        avanca();
+        tamanho++;
+    }
+
+    public No remove(){
+        No oldNo = cursor;
+        if(tamanho == 1){
+            cursor = null;
+        }else {
+            for (int i = 0; i<tamanho-1;i++){
+                avanca();
+            }
+            cursor.setProximo(oldNo.getProximo());
+            oldNo.setProximo(null);
+        }
+        tamanho--;
+        return oldNo;
+    }
+
+    public void avanca(){
+        cursor = cursor.getProximo();
+    }
+    public No<T> getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(No<T> cursor) {
+        this.cursor = cursor;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
+}
