@@ -1,0 +1,41 @@
+public class Node<T> {
+
+    public T dado;
+    public Node<T> proximo;
+    public Node<T> anterior;
+
+
+    public Node(T dado) {
+        this.dado = dado;
+        this.proximo = null;
+    }
+
+    public Node(T dado, Node<T> proximo) {
+        this.dado = dado;
+        this.proximo = proximo;
+    }
+
+    public T getDado() {
+        return dado;
+    }
+
+    public void setDado(T dado) {
+        this.dado = dado;
+    }
+
+    public Node<T> getProximo() {
+        return proximo;
+    }
+
+    public void setProximo(Node<T> proximo) {
+        this.proximo = proximo;
+    }
+
+    public Node<T> getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(Node<T> anterior) {
+        this.anterior = anterior;
+    }
+}
