@@ -1,0 +1,66 @@
+public class Fila<T> {
+
+    public Node<T> inicio;
+    public Node<T> ultimo;
+    public int tamanho;
+
+
+    public void add(T dado){
+        Node<T> node = new Node<T>(dado);
+        if(getTamanho() == 0){
+            setInicio(node);
+        }else{
+            getUltimo().setProximo(node);
+        }
+        setUltimo(node);
+        tamanho++;
+    }
+
+    public T removeInicio(){
+        if(getInicio()==null){
+            return null;
+        }
+        T aux = getInicio().getDado();
+        setInicio(getInicio().getProximo());
+        tamanho--;
+        return aux;
+    }
+
+    public String imprimir(){
+        String str = null;
+        Node local = inicio;
+        while (local != null){
+            str = local.getDado() + " ";
+            local = local.getProximo();
+        }
+        return str;
+    }
+
+    public void tamanho(){
+        System.out.println("O tamanho é: " + getTamanho());
+    }
+
+    public Node<T> getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Node<T> inicio) {
+        this.inicio = inicio;
+    }
+
+    public Node<T> getUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(Node<T> ultimo) {
+        this.ultimo = ultimo;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
+}
