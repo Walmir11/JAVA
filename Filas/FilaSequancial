@@ -1,0 +1,65 @@
+public class FilaSequencial<T> {
+
+    private int inicio;
+    private int ultimo;
+    private int fila[];
+    private int tamanho;
+
+    public FilaSequencial() {
+        this.inicio = 0;
+        this.ultimo = -1;
+        this.tamanho = 0;
+    }
+
+    public void iniciarFila(int tamanho) {
+        fila = new int[tamanho];
+
+    }
+
+    public void adicionar(int elemento){
+        if(tamanho == fila.length){
+            System.out.println("Fila cheia");
+        }else if(getUltimo()==fila.length-1){
+            setUltimo(getUltimo()-1);
+        }
+        setUltimo(getUltimo()+1);
+        fila[getUltimo()]=elemento;
+        tamanho++;
+    }
+    public void remover(){
+        if(tamanho!=0){
+            fila[getInicio()] = 0;
+            setInicio(getInicio()+1);
+            if(getInicio()==fila.length){
+                setInicio(0);
+            }
+            tamanho--;
+        }else {
+            System.out.println("A lisra está vazia!");
+        }
+    }
+
+    public int getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(int inicio) {
+        this.inicio = inicio;
+    }
+
+    public int getUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(int ultimo) {
+        this.ultimo = ultimo;
+    }
+
+    public int[] getFila() {
+        return fila;
+    }
+
+    public void setFila(int[] fila) {
+        this.fila = fila;
+    }
+}
