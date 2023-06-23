@@ -42,6 +42,22 @@ public class ListaDuplamenteCircular<T> {
     public void avanca(){
         cursor = cursor.getProximo();
     }
+
+    public String toString(){
+        if(tamanho == 0){
+            return "Lista Vacia";
+        }
+        StringBuilder stringBuilder = new StringBuilder("A lista é: ");
+        No<T> atual = getCursor();
+        for(int i = 0; i<tamanho-1;i++){
+            stringBuilder.append(atual.getElemento()).append(",");
+            atual = atual.getProximo();
+        }
+        stringBuilder.append(atual.getElemento()).append(".");
+        return stringBuilder.toString();
+
+    }
+
     public No<T> getCursor() {
         return cursor;
     }
