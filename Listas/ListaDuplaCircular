@@ -1,0 +1,60 @@
+public class ListaDuplamenteCircular<T> {
+    public No<T> cursor;
+    public int tamanho;
+
+    public ListaDuplamenteCircular() {
+        this.cursor = null;
+        this.tamanho = 0;
+    }
+
+    public void add(T elemento){
+        No<T> no = new No<T>(elemento);
+        if(cursor == null){
+            no.setProximo(no);
+            no.setAnterior(no);
+            cursor = no;
+        }else {
+            No local=cursor;
+            no.setProximo(cursor.getProximo());
+            cursor.setProximo(no);
+            no.setAnterior(cursor);
+            cursor.getProximo().setAnterior(local);
+        }
+        avanca();
+        tamanho++;
+    }
+
+    public No remove(){
+        No<T> oldNo = cursor;
+        if(tamanho == 1){
+            cursor = null;
+        }else {
+            No<T> proximo = cursor.getProximo();
+            No<T> anterior = cursor.getAnterior();
+            proximo.setAnterior(anterior);
+            anterior.setProximo(proximo);
+            cursor = proximo;
+        }
+        tamanho--;
+        return oldNo;
+    }
+
+    public void avanca(){
+        cursor = cursor.getProximo();
+    }
+    public No<T> getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(No<T> cursor) {
+        this.cursor = cursor;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
+}
