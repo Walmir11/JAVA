@@ -1,0 +1,413 @@
+package EstruturaDeDados1.Vetor.Objeto;
+
+import java.util.*;
+
+public class Vetor<T> implements Iterable<T>{
+
+    public T[] vetor;
+    private int contElementos ;
+    private int tamanhoVetor;
+    private int vlIncremento ;
+
+
+    public Vetor(int tamanho, int incremento) {
+        this.tamanhoVetor = tamanho;
+        this.vlIncremento = incremento;
+        contElementos = 0;
+        vetor = (T[]) new Object[this.tamanhoVetor];
+    }
+
+    public Vetor(int tamVetor) {
+        this.tamanhoVetor = tamVetor;
+        vetor = (T[]) new Object[this.tamanhoVetor];
+        contElementos = 0;
+        vlIncremento = 10;
+    }
+
+    public Vetor() {
+        this.tamanhoVetor = 10;
+        this.vlIncremento = 10;
+        contElementos = 0;
+        vetor = (T[]) new Object[this.tamanhoVetor];
+    }
+
+    private Iterator<T> myIterator = new Iterator<T>() {
+
+        private int posicao = 0;
+
+        @Override
+        public boolean hasNext() {
+            if (posicao < contElementos) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public T next() throws NoSuchElementException {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                T elemento = vetor[posicao];
+                posicao++;
+                return elemento;
+            }
+        }
+    };
+
+
+
+
+    public void adicionar(T elemento) {
+        redimensionar();
+        this.vetor[contElementos]=elemento;
+        contElementos++;
+
+    }
+
+    public void AdicionarPos(int posicao, T elemento) throws IndexOutOfBoundsException {
+        this.redimensionar();
+        if(posicao>tamanhoVetor||posicao<0) {
+            throw new IndexOutOfBoundsException();
+        }else if (posicao==contElementos){
+            adicionar(elemento);
+        }else {
+            for (int i = contElementos; i > posicao ; i--) {
+                vetor[i] = vetor[i-1];
+            }
+            vetor[posicao] = elemento;
+            contElementos++;
+        }
+
+    }
+
+
+    public void adicionarInicio(T elemento){
+        redimensionar();
+        for (int i = contElementos; i > 0 ; i--) {
+            vetor[i] = vetor[i-1];
+        }
+        vetor[0] = elemento;
+        contElementos++;
+    }
+
+    public void AdicionarInicioProf(T elemento) {
+        //Redimensionar
+        this.redimensionar();
+        //Inserir na posição inicial
+        this.AdicionarPos(0,elemento);
+        //Mover todos para direita
+    }
+
+
+    public void removerFinal(){
+        if(vetor[contElementos].equals(0)){
+            System.out.println("O vetor já está vazio nessa posição!!");
+        }else {
+            vetor[contElementos-1]=null;
+        }
+        contElementos--;
+
+    }
+
+    public void removerPosicao(int posicao) throws IndexOutOfBoundsException{
+        if(posicao>tamanhoVetor||posicao<0){
+            throw new IndexOutOfBoundsException("Posição invalida");
+        }else {
+            for (int i = posicao; i < contElementos - 1; i++) {
+                vetor[i] = vetor[i + 1];
+            }
+        }
+    }
+
+    public void removerElemento(T elemento){
+        int posicao=0;
+        if(contem(elemento)){
+            for (int i = 0; i<contElementos-1;i++){
+                if(vetor[i].equals(elemento)){
+                    posicao = i;
+                    break;
+                }
+            }
+            removerPosicao(posicao);
+        }else {
+            System.out.println("Elemento não encontrado");
+        }
+    }
+
+    public void removerInicio(){
+        if (estaVazia()){
+            System.out.println("A lista está vazia");
+        }else {
+            removerPosicao(0);
+        }
+    }
+
+    public int PosElemento(T elemento){
+        for (int i = 0; i < contElementos; i++) {
+            if(elemento.equals(vetor[i])){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void inserirRandonElemento(Vetor<T> elementos){
+        int qtdElementos = vetor.length + elementos.Tamanho();
+        if(qtdElementos > vetor.length){
+            redimensionar();
+        }
+        if (this.estaVazia()) {
+            for (T elemento : elementos) {
+                this.adicionar(elemento);
+            }
+        }else {
+            Random gerador = new Random();
+            int[] posicoes =  new int [elementos.Tamanho()];
+            boolean[] posicoesUsadas = new boolean[this.Tamanho()];
+
+            for (int i = 0; i < posicoes.length; i++) {
+                int posicao;
+                do {
+                    posicao = gerador.nextInt(this.Tamanho());
+                } while (posicoesUsadas[posicao]);
+                posicoes[i] = posicao;
+                posicoesUsadas[posicao] = true;
+            }
+
+            int contPos = 0;
+            for (T elemento:elementos) {
+                this.AdicionarPos(posicoes[contPos], elemento);
+                contPos++;
+            }
+        }
+    }
+
+    public T inseririrElementoApos(T elemento, T posicao){
+        int i = 0;
+        if(contem(posicao)) {
+            for (T elementos: vetor) {
+                if (posicao.equals(vetor[i])) {
+                    AdicionarPos(i+1, elemento);
+                    return elemento;
+                }
+                i++;
+            }
+        }else {
+            System.out.println("Elemento não encontrado");
+        }
+        return null;
+    }
+
+    public void InserirElementoAposProf(T elementoProcurado, T elementoParaInserir){
+        if(contem(elementoProcurado)){
+            int pos = PosElemento(elementoProcurado)+1;
+            AdicionarPos(pos,elementoParaInserir);
+        }else {
+            System.out.println("Elemento não existe!!");
+        }
+    }
+
+    public void inserirPosPar(Vetor<T> elementos) {
+        if (this.Tamanho() > elementos.Tamanho()) {
+            int qtdElementos = vetor.length + elementos.Tamanho();
+            if (qtdElementos > vetor.length) {
+                redimensionar();
+            }
+            if (estaVazia()) {
+                for (T elemento : elementos) {
+                    this.adicionar(elemento);
+                }
+            } else {
+                int posPar = 0;
+                for (T elemento : elementos) {
+                    AdicionarPos(posPar, elemento);
+                    posPar = posPar + 2;
+                }
+            }
+        } else {
+            int y = 0;
+            T[] copia = (T[]) new Object[this.tamanhoVetor];
+            for (T elemento : elementos) {
+                copia[y] = elemento;
+                y++;
+            }
+            int cont = 0;
+            for (int i = 0; i < this.Tamanho(); i += 2) {
+                this.AdicionarPos(i, copia[cont]);
+                cont++;
+            }
+            for (int i = cont; i < elementos.Tamanho(); i++) {
+                this.adicionar(copia[i]);
+            }
+        }
+    }
+
+    public void mesclarVetores(Vetor<T> elementos) {
+        if (this.Tamanho() > elementos.Tamanho()) {
+            int qtdElementos = vetor.length + elementos.Tamanho();
+            if (qtdElementos > vetor.length) {
+                redimensionar();
+            }
+            if (estaVazia()) {
+                for (T elemento : elementos) {
+                    this.adicionar(elemento);
+                }
+            } else {
+                int posPar = 1;
+                for (T elemento : elementos) {
+                    AdicionarPos(posPar, elemento);
+                    posPar = posPar + 2;
+                }
+            }
+        } else {
+            int y = 0;
+            T[] copia = (T[]) new Object[this.tamanhoVetor];
+            for (T elemento : elementos) {
+                copia[y] = elemento;
+                y++;
+            }
+            int cont = 0;
+            for (int i = 1; i < this.Tamanho(); i += 2) {
+                this.AdicionarPos(i, copia[cont]);
+                cont++;
+            }
+            for (int i = cont; i < elementos.Tamanho(); i++) {
+                this.adicionar(copia[i]);
+            }
+        }
+    }
+
+    public void Inverter() {
+        int left = 0;
+        int right = contElementos - 1;
+        while (left < right) {
+            T temp = vetor[left];
+            vetor[left] = vetor[right];
+            vetor[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    public Vetor<T> Copiar() {
+        Vetor<T> copia = new Vetor<T>(this.tamanhoVetor, this.vlIncremento);
+
+        for (int i = 0; i < this.contElementos; i++) {
+            copia.adicionar(vetor[i]);
+        }
+
+        return copia;
+    }
+
+    public Vetor<T> CopiarParte(int inicio, int fim) {
+        Vetor<T> copia = new Vetor<>(fim - inicio + 1, this.vlIncremento);
+        for (int i = inicio; i <= fim; i++) {
+            copia.adicionar(this.vetor[i]);
+        }
+        return copia;
+    }
+
+    public void InserirPartes(Vetor<T> outroVetor, int quantidade) {
+        if (quantidade <= 0) {
+            return; // Não é necessário inserir elementos
+        }
+
+        // Redimensionar o vetor atual para acomodar os novos elementos
+        while (this.tamanhoVetor < this.Tamanho() + quantidade) {
+            this.redimensionar();
+        }
+
+        int posicaoInsercao = this.Tamanho();
+
+        for (int i = 0; i < quantidade; i++) {
+            T elemento = outroVetor.getElemento(i);
+
+            // Inserir elementos da esquerda para a direita
+            this.vetor[posicaoInsercao] = elemento;
+            posicaoInsercao++;
+        }
+
+        this.contElementos += quantidade;
+    }
+
+    public void recuperarIguais1(Vetor<T> elementos) {
+        int cont = 0;
+        T[] vetCopia = (T[]) new Object[this.Tamanho()];
+
+        for (T elemento : elementos) {
+            for (int i = 0; i < vetor.length; i++) {
+                if (elemento.equals(this.vetor[i])) {
+                    vetCopia[i] = elemento;
+                }
+            }
+        }
+        this.Limpar();
+        for (T elemento : vetCopia) {
+            if (elemento != null) {
+                this.adicionar(elemento);
+            }
+
+        }
+
+    }
+
+    public void Limpar() {
+        vetor = (T[]) new Object[tamanhoVetor];
+        contElementos = 0;
+    }
+
+    public void redimensionar(){
+       if(contElementos==tamanhoVetor){
+           T[] vetor1 = (T[])new Object[tamanhoVetor + vlIncremento];
+           for (int i = 0; i<tamanhoVetor;i++){
+               vetor1[i]=vetor[i];
+           }
+           vetor=vetor1;
+       }
+    }
+
+    public T getElemento(int posicao) throws IndexOutOfBoundsException {
+        if (posicao >= 0 && posicao < contElementos) {
+            return vetor[posicao];
+        } else {
+            throw new IndexOutOfBoundsException("A posição solicitada é inválida!");
+        }
+    }
+
+    public int Tamanho() {
+        return this.contElementos;
+    }
+
+    public boolean contem(T elemento) {
+        for (int i = 0; i < this.contElementos; i++){
+            if (vetor[i].equals(elemento)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean estaVazia(){
+        if (contElementos == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void imprimir(){
+
+        System.out.println("Lista selecionada:");
+        System.out.println(Arrays.toString(vetor));
+
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return myIterator;
+    }
+}
+
+
