@@ -1,0 +1,22 @@
+public class Gato extends Animal{
+
+    @Override
+    public void criar() {
+        System.out.println("Gato criado");
+    }
+
+    @Override
+    public void acao() {
+        System.out.println("O  gato mia");
+    }
+
+    @Override
+    public void cor(String cor) {
+        System.out.println("A cor do gato é: " + cor);
+    }
+
+    @Override
+    public Animal clonar() {
+        return new Gato();
+    }
+}

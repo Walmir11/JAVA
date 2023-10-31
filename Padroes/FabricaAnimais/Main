@@ -1,0 +1,26 @@
+public class Main {
+    public static void main(String[] args) {
+        Logistica logistica = new Logistica();
+        Cachorro cachorro = new Cachorro();
+        Gato gato = new Gato();
+
+
+        logistica.planejarAnimal("cachorro");
+        logistica.planejarAnimal("Gato");
+
+        System.out.println("_______________________________________");
+
+        Animal gato1 = gato.clonar();
+        gato1.criar();
+        gato1.cor("vermelho");
+        gato1.acao();
+
+        System.out.println();
+
+        Animal cachorro1 = cachorro.clonar();
+        cachorro1.criar();
+        cachorro1.cor("Azul");
+        cachorro1.acao();
+
+    }
+}
