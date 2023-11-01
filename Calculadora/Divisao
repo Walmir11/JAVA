@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+
+public class Divisao {
+
+    private double divisao;
+    public ArrayList<Double> armazenDiv=new ArrayList<>();
+
+    public void addDivisao(double divisao) {
+        armazenDiv.add(divisao);
+    }
+
+
+    public double getDivisao() {
+        return divisao;
+    }
+
+    public void setDivisao(double divisao) {
+        this.divisao = divisao;
+    }
+
+
+    public void calculo(double num1, double num2) {
+        if(num2!=0){
+            setDivisao(num1 / num2);
+        }else {
+            System.out.println("Não é possível fazer divisão por 0");
+        }
+    }
+
+    public void imprimir(){
+        if(armazenDiv.isEmpty()==false){
+            System.out.println("O resultado de todas as divisões são: ");
+            for(double divisao : armazenDiv){
+                System.out.println(divisao);
+        }
+        }else {
+            System.out.println("Nenhuma divisão efetuada");
+        }
+    }
+
+
+}

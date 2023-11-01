@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Soma {
+
+    private double soma;
+    public ArrayList<Double> armazenSoma=new ArrayList<>();
+
+    public void addSoma(double soma) {
+        armazenSoma.add(soma);
+    }
+
+    public double getSoma() {
+        return soma;
+    }
+
+    public void setSoma(double soma) {
+        this.soma = soma;
+    }
+
+    public void calculo(double num1, double num2) {
+        setSoma(num1 + num2);
+    }
+
+    public void imprimir(){
+        if (armazenSoma.isEmpty()==false){
+            System.out.println("O resultado das somas são: ");
+            for (double soma : armazenSoma){
+                System.out.println(soma);
+            }
+            System.out.println("Nenhuma soma efetuada");
+        }
+    }
+}

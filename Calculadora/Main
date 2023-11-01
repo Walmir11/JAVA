@@ -1,0 +1,70 @@
+import Calculadora.Objeto.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner Wn = new Scanner(System.in);
+
+        Soma soma = new Soma();
+        Divisao divisao = new Divisao();
+        Multiplicacao multiplicacao = new Multiplicacao();
+        Subtracao subtracao = new Subtracao();
+        Potencia potencia = new Potencia();
+        Raiz raiz = new Raiz();
+
+        System.out.println("Digite qualquer coisa para entrar(Digite 0 para sair): ");
+        String entrar = Wn.next();
+
+        while(!entrar.equals("0")){
+            System.out.println("Escolha uma opera��o: \n1-soma\n2-subtracao\n3-multiplicacao\n4-divisao\n5-potenciacao\n6-raiz");
+            String opicao = Wn.next();
+            if (opicao.equalsIgnoreCase("soma")||opicao.equals("1")) {
+                System.out.println("Digite dois números: ");
+                double num1 = Wn.nextDouble();
+                double num2 = Wn.nextDouble();
+                soma.calculo(num1,num2);
+                soma.addSoma(soma.getSoma());
+            }else if(opicao.equalsIgnoreCase("subtracao")||opicao.equals("2")){
+                System.out.println("Digite dois n�meros: ");
+                double num1 = Wn.nextDouble();
+                double num2 = Wn.nextDouble();
+                subtracao.calculo(num1,num2);
+                subtracao.addSub(subtracao.getSubtracao());
+            }else if(opicao.equalsIgnoreCase("multiplicacao")||opicao.equals("3")) {
+                System.out.println("Digite dois n�meros: ");
+                double num1 = Wn.nextDouble();
+                double num2 = Wn.nextDouble();
+                multiplicacao.calculo(num1,num2);
+                multiplicacao.addMultiplicacao(multiplicacao.getMultiplicacao());
+            }else if(opicao.equalsIgnoreCase("divisao")||opicao.equals("4")) {
+            System.out.println("Digite dois n�meros: ");
+            double num1 = Wn.nextDouble();
+            double num2 = Wn.nextDouble();
+            divisao.calculo(num1,num2);
+            divisao.addDivisao(divisao.getDivisao());
+            }else if(opicao.equalsIgnoreCase("potenciacao")||opicao.equals("5")){
+                System.out.println("Digite dois n�meros: ");
+                double num1 = Wn.nextDouble();
+                double num2 = Wn.nextDouble();
+                potencia.calculo(num1,num2);
+                potencia.addPot(potencia.getResultado());
+            } else if (opicao.equalsIgnoreCase("raiz")||opicao.equals("6")) {
+                System.out.println("Digite o n�mero: ");
+                double num1 = Wn.nextDouble();
+                raiz.calculo(num1);
+                raiz.addRaiz(raiz.getResultado());
+            }else {
+                System.out.println("Operação não correspondente");
+            }
+
+            System.out.println("Digite qualquer coisa para entrar(Digite 0 para sair): ");
+            entrar = Wn.next();
+
+        }
+
+        soma.imprimir();
+        subtracao.imprimir();
+        multiplicacao.imprimir();
+
+    }
+}

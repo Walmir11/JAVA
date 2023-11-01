@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Potencia {
+
+    private double resultado;
+    public ArrayList<Double> armazenPot=new ArrayList<>();
+
+    public void addPot(double potencia) {
+        armazenPot.add(potencia);
+    }
+
+    public double getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(double resultado) {
+        this.resultado = resultado;
+    }
+
+    public void calculo(double num1, double num2) {
+        setResultado(Math.pow(num1,num2));
+    }
+
+    public void imprimir(){
+        if (armazenPot.isEmpty()==false){
+            System.out.println("O resultado das potencias são: ");
+            for (double multiplicacao : armazenPot){
+                System.out.println(multiplicacao);
+            }
+            System.out.println("Nenhuma Potenciação efetuada");
+        }
+    }
+}

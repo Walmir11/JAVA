@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Raiz {
+
+    private double resultado;
+    public ArrayList<Double> armazenRaiz=new ArrayList<>();
+
+    public void addRaiz(double raiz) {
+        armazenRaiz.add(raiz);
+    }
+
+    public double getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(double resultado) {
+        this.resultado = resultado;
+    }
+
+    public void calculo(double num1) {
+        setResultado(Math.sqrt(num1));
+    }
+
+    public void imprimir(){
+        if (armazenRaiz.isEmpty()==false){
+            System.out.println("O resultado das raizes são: ");
+            for (double raiz : armazenRaiz){
+                System.out.println(raiz);
+            }
+            System.out.println("Nenhuma radiciação efetuada");
+        }
+    }
+}

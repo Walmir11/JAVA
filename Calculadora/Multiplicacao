@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+
+public class Multiplicacao {
+
+    private double multiplicacao;
+    public ArrayList<Double> armazenMult=new ArrayList<>();
+
+    public void addMultiplicacao(double multiplicacao) {
+        armazenMult.add(multiplicacao);
+    }
+
+    public double getMultiplicacao() {
+        return multiplicacao;
+    }
+
+    public void setMultiplicacao(double multiplicacao) {
+        this.multiplicacao = multiplicacao;
+    }
+
+    public void calculo(double num1, double num2) {
+        setMultiplicacao(num1*num2);
+    }
+
+    public void imprimir(){
+        if (armazenMult.isEmpty()==false){
+            System.out.println("O resultado das multiplicações são: ");
+            for (double multiplicacao : armazenMult){
+                System.out.println(multiplicacao);
+            }
+            System.out.println("Nenhuma multiplicação efetuada");
+        }
+    }
+
+    public void ordenacao(){
+
+    }
+
+}

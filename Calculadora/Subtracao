@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Subtracao {
+
+    private double subtracao;
+    public ArrayList<Double> armazenSub=new ArrayList<>();
+
+    public void addSub(double subtracao) {
+        armazenSub.add(subtracao);
+    }
+
+    public double getSubtracao() {
+        return subtracao;
+    }
+
+    public void setSubtracao(double subtracao) {
+        this.subtracao = subtracao;
+    }
+
+    public void calculo(double num1, double num2) {
+        setSubtracao(num1-num2);
+    }
+
+    public void imprimir(){
+        if (armazenSub.isEmpty()==false){
+            System.out.println("O resultado das subtrações são: ");
+            for (double subtracao : armazenSub){
+                System.out.println(subtracao);
+            }
+            System.out.println("Nenhuma subtração efetuada");
+        }
+    }
+}
