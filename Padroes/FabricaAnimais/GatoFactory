@@ -1,6 +1,6 @@
 public class GatoFactory extends AnimalFactory{
     @Override
     public Gato criarAnimal() {
-        return new Gato();
+        return new Gato("lolla", "ciano");
     }
 }
