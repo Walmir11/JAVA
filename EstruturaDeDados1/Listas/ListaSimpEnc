@@ -1,0 +1,187 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class ListaSimpEnc<T> {
+
+    private No<T> inicio;
+    private No<T> fim;
+    private int contElementos;
+
+    public ListaSimpEnc(){
+        inicio = fim = null;
+        contElementos=0;
+    }
+
+
+    public No<T> getInicio() {
+        return this.inicio;
+    }
+
+
+    public No<T> getFim() {
+        return this.fim;
+    }
+
+    public void clear() {
+        inicio = fim = null;
+        contElementos=0;
+    }
+
+    public int size() {
+        return this.contElementos;
+    }
+
+    public boolean estaVazia() {
+        if (contElementos==0){
+            return true;
+        }
+        return false;
+    }
+
+    public void InserirInicio(T elemento) {
+        No<T> novoNo = new No<>(elemento);
+        if (inicio==null){
+            inicio = fim=novoNo;
+        }else{
+            novoNo.setProximo(inicio);
+            inicio = novoNo;
+        }
+        contElementos++;
+
+    }
+
+    public void InserirFim(T elemento) {
+        No<T> novoNo = new No<>(elemento);
+        if (inicio==null){
+            inicio=fim=novoNo;
+
+        }else {
+            fim.setProximo(novoNo);
+            fim=novoNo;
+        }
+        contElementos++;
+
+    }
+    public void Inserir(int pos, T elemento) {
+        No<T> novoNo = new No<T>(elemento);
+        No<T> aux = inicio;
+        if (pos<0 || pos>contElementos) {
+            throw new IndexOutOfBoundsException();
+        }else if (pos==0){
+            this.InserirInicio(elemento);
+        } else if (pos==contElementos) {
+            this.InserirFim(elemento);
+        } else{
+            for (int i = 1; i < contElementos ; i++) {
+                if (i==pos){
+                    novoNo.setProximo(aux.getProximo());//1 -> 10->2 -> 5
+                    aux.setProximo(novoNo);
+                    contElementos++;
+                }
+                aux = aux.getProximo();
+            }
+        }
+
+    }
+    
+    public boolean contem(T elemento) {
+        No<T> aux = inicio;
+        for (int i = 0; i < contElementos; i++) {
+            if (aux.getElemento().equals(elemento)){
+                return true;
+            }
+            aux=aux.getProximo();
+        }
+        return false;
+    }
+
+    public void RemoverInicio() {
+        if (!estaVazia()){
+            inicio=inicio.getProximo();
+            contElementos--;
+        }
+
+    }
+
+    public void RemoverFim() {
+
+        if (!estaVazia()){
+            No<T> aux = inicio;
+            if (contElementos == 1){
+                this.clear();
+            } else {
+                for (int i = 0; i < contElementos-2;i++){
+                    aux = aux.getProximo();
+                }
+                aux.setProximo(null);
+                fim = aux;
+                contElementos--;
+            }
+        }
+
+    }
+
+    public void RemoverElemento(T Elemento) {
+        //1. verificar se elemento existe com o contem()
+        if (this.contem(Elemento)){
+            //2. verificar se inicio.getElemento é igual ao Elemento de entrada
+            //2.1 RemoverInicio()
+            if (this.inicio.getElemento().equals(Elemento)){
+                this.RemoverInicio();
+                //3. verificar se fim.getElemento é igual ao Elemento de entrad
+                //3.1 RemoverFim()
+            }else if (this.fim.getElemento().equals(Elemento)){
+                this.RemoverFim();
+            } else{
+                No<T> aux = inicio;
+                for (int i = 0; i < posicao(Elemento)-1; i++) {
+                    aux = aux.getProximo();
+                }
+                aux.setProximo(aux.getProximo().getProximo());
+                contElementos--;
+            }
+        }
+
+    }
+
+    private int posicao(T Elemento) {
+        No<T> aux = inicio;
+        int pos =-1;
+        for (int i = 0; i < contElementos ; i++) {
+            if (aux.getElemento().equals(Elemento)){
+                return i;
+            }
+            aux = aux.getProximo();
+        }
+        return pos;
+    }
+
+    public Iterator iterator() {
+        Iterator<T> myIterator = new Iterator<T>() {
+
+            No posicao = inicio;
+
+            @Override
+            public boolean hasNext() {
+                if (posicao != null) {
+                    return true;
+                } else {
+                    this.posicao = inicio;
+                    return false;
+                }
+            }
+
+            @Override
+            public T next() throws NoSuchElementException {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                } else {
+                    T elemento = (T) posicao.getElemento();
+                    posicao = posicao.getProximo();
+                    return elemento;
+                }
+            };
+        }
+        return myIterator;
+    }
+}
