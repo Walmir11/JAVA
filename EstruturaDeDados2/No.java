@@ -1,11 +1,11 @@
 package EstruturaDeDados2;
 
-public class Elemento<T> {
+public class No<T> {
     private T dado;
-    private Elemento<T> esquerdo;
-    private Elemento<T> direito;
+    private No<T> esquerdo;
+    private No<T> direito;
 
-    public Elemento(T dado) {
+    public No(T dado) {
         this.dado = dado;
         this.esquerdo = null;
         this.direito = null;
@@ -19,19 +19,19 @@ public class Elemento<T> {
         this.dado = dado;
     }
 
-    public Elemento<T> getEsquerdo() {
+    public No<T> getEsquerdo() {
         return esquerdo;
     }
 
-    public void setEsquerdo(Elemento<T> esquerdo) {
+    public void setEsquerdo(No<T> esquerdo) {
         this.esquerdo = esquerdo;
     }
 
-    public Elemento<T> getDireito() {
+    public No<T> getDireito() {
         return direito;
     }
 
-    public void setDireito(Elemento<T> direito) {
+    public void setDireito(No<T> direito) {
         this.direito = direito;
     }
 }
