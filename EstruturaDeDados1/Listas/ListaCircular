@@ -1,3 +1,5 @@
+package Listas.ListaCircular;
+
 public class ListaCircular<T> {
     public No<T> cursor;
     public int tamanho;
