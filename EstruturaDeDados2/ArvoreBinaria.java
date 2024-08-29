@@ -1,9 +1,9 @@
 package EstruturaDeDados2;
 
-public class ArvoreB<T extends Comparable> {
+public class ArvoreBinaria<T extends Comparable> {
     private No<T> raiz;
 
-    public ArvoreB() {
+    public ArvoreBinaria() {
         this.raiz = null;
     }
 
