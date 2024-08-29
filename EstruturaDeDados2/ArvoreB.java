@@ -2,11 +2,9 @@ package EstruturaDeDados2;
 
 public class ArvoreB<T extends Comparable> {
     private No<T> raiz;
-    int ordem;
 
-    public ArvoreB(int ordem) {
+    public ArvoreB() {
         this.raiz = null;
-        this.ordem = ordem;
     }
 
     public No<T> getRaiz() {
@@ -15,14 +13,6 @@ public class ArvoreB<T extends Comparable> {
 
     public void setRaiz(No<T> raiz) {
         this.raiz = raiz;
-    }
-
-    public int getOrdem() {
-        return ordem;
-    }
-
-    public void setOrdem(int ordem) {
-        this.ordem = ordem;
     }
 
     public void adicionar(T valor){
@@ -51,25 +41,104 @@ public class ArvoreB<T extends Comparable> {
         }
     }
 
-    public void remover(){
+    public void remover(T valor){
+        No<T> atual = this.raiz;
+        No<T> paiAtual = null;
+        while (atual != null && atual.getDado() != valor){
+            paiAtual = atual;
+            if(valor.compareTo(atual.getDado()) < 0) {
+                atual = atual.getEsquerdo() ;
+            }else {
+                atual = atual.getDireito();
+            }
+        }
 
+        if (atual == null) {
+            return;
+        }
+
+        if (atual.getEsquerdo() == null && atual.getDireito() == null) {
+            if (atual == this.raiz) {
+                raiz = null;
+            } else if (paiAtual.getEsquerdo() == atual) {
+                paiAtual.setEsquerdo(null);
+            } else {
+                paiAtual.setDireito(null);
+            }
+        } else if (atual.getEsquerdo() == null) {
+            if (atual == this.raiz){
+                raiz = atual.getDireito();
+            } else if (paiAtual.getEsquerdo() == atual) {
+                paiAtual.setEsquerdo(atual.getDireito());
+            } else {
+                paiAtual.setDireito(atual.getDireito());
+            }
+        } else if (atual.getDireito() == null) {
+            if (atual == this.raiz){
+                raiz = atual.getEsquerdo();
+            } else if (paiAtual.getEsquerdo() == atual) {
+                paiAtual.setEsquerdo(atual.getEsquerdo());
+            } else {
+                paiAtual.setDireito(atual.getEsquerdo());
+            }
+        } else {
+            No<T> sucessor = atual.getDireito();
+            No<T> paiSucessor = atual;
+            while (sucessor.getEsquerdo() != null) {
+                paiSucessor = sucessor;
+                sucessor = sucessor.getEsquerdo();
+            }
+            if (paiSucessor != atual) {
+                paiSucessor.setEsquerdo(sucessor.getDireito());
+                sucessor.setDireito(atual.getDireito());
+            }
+            sucessor.setEsquerdo(atual.getEsquerdo());
+
+            if (atual == this.raiz) {
+                raiz = sucessor;
+            } else if (paiAtual.getEsquerdo() == atual) {
+                paiAtual.setDireito(sucessor);
+            } else {
+                paiAtual.setDireito(sucessor);
+            }
+        }
     }
 
-    public void buscar(){
-
+    public No<T> buscar(T valor){
+        No<T> atual = this.raiz;
+        while (atual != null){
+            if (valor.compareTo(atual.getDado()) == 0){
+                return atual;
+            } else if (valor.compareTo(atual.getDado()) < 0){
+                atual = atual.getEsquerdo();
+            } else {
+                atual = atual.getDireito();
+            }
+        }
+        return null;
     }
 
-    public void emOrdem(){
-
+    public void emOrdem(No<T> atual){
+        if (atual != null){
+            emOrdem(atual.getEsquerdo());
+            System.out.println(atual.getDado());
+            emOrdem(atual.getDireito());
+        }
     }
 
-    public void preOrdem(){
-
+    public void preOrdem(No<T> atual){
+        if (atual != null){
+            System.out.println(atual.getDado());
+            preOrdem(atual.getEsquerdo());
+            preOrdem(atual.getDireito());
+        }
     }
 
-    public void posOrdem(){
-
+    public void posOrdem(No<T> atual){
+        if (atual != null) {
+            posOrdem(atual.getEsquerdo());
+            posOrdem(atual.getDireito());
+            System.out.println(atual.getDado());
+        }
     }
-
-
 }
