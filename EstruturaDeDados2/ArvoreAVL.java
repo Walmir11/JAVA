@@ -1,6 +1,7 @@
 package EstruturaDeDados2;
 
 public class ArvoreAVL<T extends Comparable<T>> {
+
     private No<T> raiz;
 
     public ArvoreAVL() {

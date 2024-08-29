@@ -10,7 +10,7 @@ public class No<T> {
         this.dado = dado;
         this.esquerdo = null;
         this.direito = null;
-        this.altura = 1;
+        this.altura = 1; // Inicializa a altura como 1
     }
 
     public T getDado() {

@@ -10,7 +10,7 @@ public class Main {
         arvore.adicionar(3);
         arvore.adicionar(7);
         arvore.adicionar(12);
-        arvore.adicionar(18);
+        arvore.adicionar(17);
 
         // Percorrer a árvore em ordem
         System.out.println("Percurso em ordem:");
