@@ -4,11 +4,13 @@ public class No<T> {
     private T dado;
     private No<T> esquerdo;
     private No<T> direito;
+    private int altura;
 
     public No(T dado) {
         this.dado = dado;
         this.esquerdo = null;
         this.direito = null;
+        this.altura = 1;
     }
 
     public T getDado() {
@@ -33,5 +35,13 @@ public class No<T> {
 
     public void setDireito(No<T> direito) {
         this.direito = direito;
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
     }
 }

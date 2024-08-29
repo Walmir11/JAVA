@@ -2,7 +2,7 @@ package EstruturaDeDados2;
 
 public class Main {
     public static void main(String[] args) {
-        ArvoreBinaria<Integer> arvore = new ArvoreBinaria<>();
+        ArvoreAVL<Integer> arvore = new ArvoreAVL<>();
 
         arvore.adicionar(10);
         arvore.adicionar(5);
