@@ -24,19 +24,19 @@ public class Node<T extends Comparable<T>> {
         this.dado = dado;
     }
 
-    public Node<T> getEsquerda() {
+    public Node<T> getEsquerdo() {
         return esquerda;
     }
 
-    public void setEsquerda(Node<T> esquerda) {
+    public void setEsquerdo(Node<T> esquerda) {
         this.esquerda = esquerda;
     }
 
-    public Node<T> getDireita() {
+    public Node<T> getDireito() {
         return direita;
     }
 
-    public void setDireita(Node<T> direita) {
+    public void setDireito(Node<T> direita) {
         this.direita = direita;
     }
 
