@@ -1,4 +1,4 @@
-package PadroesProjeto.Adapter;
+package Padroes.Adapter;
 
 public class JSONAdapter extends FormatoJSON implements Formato{
     @Override

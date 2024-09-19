@@ -1,4 +1,4 @@
-package PadroesProjeto.Adapter;
+package Padroes.Adapter;
 
 public class FormatoCSV {
     public void carregarCSV(String nome){
