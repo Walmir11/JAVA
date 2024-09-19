@@ -1,3 +1,5 @@
+package Atividade;
+
 public class Main {
     public static void main(String[] args) {
         // Cria uma nova árvore rubro-negra
@@ -10,7 +12,7 @@ public class Main {
         arvore.inserir(10);
         arvore.inserir(5);
         arvore.inserir(30);
-        
+
         // Exibindo a árvore após inserções
         System.out.println("Árvore após inserções:");
         arvore.imprimirArvore();

@@ -1,3 +1,5 @@
+package Atividade;
+
 public interface IBalancedTree<T extends Comparable<T>> extends IBinarySearchTree<T> {
     
     // Método para balancear a árvore após uma inserção

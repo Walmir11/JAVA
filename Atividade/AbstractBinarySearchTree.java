@@ -1,3 +1,5 @@
+package Atividade;
+
 public abstract class AbstractBinarySearchTree<T extends Comparable<T>> {
 
     protected Node<T> raiz;
@@ -15,8 +17,8 @@ public abstract class AbstractBinarySearchTree<T extends Comparable<T>> {
     protected abstract void balancearAposRemocao(Node<T> no);
 
     // Método de busca básica na árvore
-    public Node<T> buscar(T dado) {
-        return buscarArvore(raiz, dado);
+    public boolean buscar(T dado) {
+        return buscarArvore(raiz, dado).isCor();
     }
 
     // Busca recursiva

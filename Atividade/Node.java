@@ -1,3 +1,5 @@
+package Atividade;
+
 public class Node<T extends Comparable<T>> {
     private T dado;               // Dado armazenado no nó
     private Node<T> esquerda;      // Filho à esquerda

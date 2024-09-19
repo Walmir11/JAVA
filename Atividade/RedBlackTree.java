@@ -1,3 +1,5 @@
+package Atividade;
+
 public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchTree<T> {
 
     // Construtor da árvore rubro-negra
@@ -9,10 +11,10 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
     @Override
     public void inserir(T dado) {
         Node<T> novoNo = new Node<>(dado);
-        root = inserirRec(root, novoNo);
+        raiz = inserirRec(raiz, novoNo);
         balancearAposInsercao(novoNo);
-        if (root != null) {
-            root.setCor(false); // A raiz deve ser preta
+        if (raiz != null) {
+            raiz.setCor(false); // A raiz deve ser preta
         }
     }
 
@@ -23,12 +25,12 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
         }
 
         if (novoNo.getDado().compareTo(raiz.getDado()) < 0) {
-            Node<T> esquerda = inserirRec(raiz.getEsquerda(), novoNo);
-            raiz.setEsquerda(esquerda);
+            Node<T> esquerda = inserirRec(raiz.getEsquerdo(), novoNo);
+            raiz.setEsquerdo(esquerda);
             esquerda.setPai(raiz);
         } else if (novoNo.getDado().compareTo(raiz.getDado()) > 0) {
-            Node<T> direita = inserirRec(raiz.getDireita(), novoNo);
-            raiz.setDireita(direita);
+            Node<T> direita = inserirRec(raiz.getDireito(), novoNo);
+            raiz.setDireito(direita);
             direita.setPai(raiz);
         }
 
@@ -38,16 +40,16 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
     // Método para balancear a árvore após a inserção
     @Override
     public void balancearAposInsercao(Node<T> no) {
-        while (no != null && no != root && no.getPai().isCor()) {
-            if (no.getPai() == no.getPai().getPai().getEsquerda()) {
-                Node<T> tio = no.getPai().getPai().getDireita();
+        while (no != null && no != raiz && no.getPai().isCor()) {
+            if (no.getPai() == no.getPai().getPai().getEsquerdo()) {
+                Node<T> tio = no.getPai().getPai().getDireito();
                 if (tio != null && tio.isCor()) {
                     no.getPai().setCor(false);
                     tio.setCor(false);
                     no.getPai().getPai().setCor(true);
                     no = no.getPai().getPai();
                 } else {
-                    if (no == no.getPai().getDireita()) {
+                    if (no == no.getPai().getDireito()) {
                         no = no.getPai();
                         rotacionarEsquerda(no);
                     }
@@ -56,14 +58,14 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
                     rotacionarDireita(no.getPai().getPai());
                 }
             } else {
-                Node<T> tio = no.getPai().getPai().getEsquerda();
+                Node<T> tio = no.getPai().getPai().getEsquerdo();
                 if (tio != null && tio.isCor()) {
                     no.getPai().setCor(false);
                     tio.setCor(false);
                     no.getPai().getPai().setCor(true);
                     no = no.getPai().getPai();
                 } else {
-                    if (no == no.getPai().getEsquerda()) {
+                    if (no == no.getPai().getEsquerdo()) {
                         no = no.getPai();
                         rotacionarDireita(no);
                     }
@@ -73,41 +75,42 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
                 }
             }
         }
+        raiz.setCor(false);
     }
 
     // Método para remover um valor da árvore
     @Override
     public void remover(T dado) {
-        Node<T> noParaRemover = buscarNo(root, dado);
+        Node<T> noParaRemover = buscarNoAux(raiz, dado);
         if (noParaRemover != null) {
-            root = removerRec(root, noParaRemover);
-            if (root != null) {
-                root.setCor(false); // A raiz deve ser preta
+            raiz = removerRec(raiz, noParaRemover);
+            if (raiz != null) {
+                raiz.setCor(false); // A raiz deve ser preta
             }
         }
     }
 
     // Método auxiliar para buscar um nó na árvore
-    private Node<T> buscarNo(Node<T> raiz, T dado) {
+    private Node<T> buscarNoAux(Node<T> raiz, T dado) {
         if (raiz == null || dado.compareTo(raiz.getDado()) == 0) {
             return raiz;
         }
 
         if (dado.compareTo(raiz.getDado()) < 0) {
-            return buscarNo(raiz.getEsquerda(), dado);
+            return buscarNoAux(raiz.getEsquerdo(), dado);
         } else {
-            return buscarNo(raiz.getDireita(), dado);
+            return buscarNoAux(raiz.getDireito(), dado);
         }
     }
 
     // Método auxiliar para remover um nó da árvore
     private Node<T> removerRec(Node<T> raiz, Node<T> noParaRemover) {
-        if (noParaRemover.getEsquerda() == null || noParaRemover.getDireita() == null) {
+        if (noParaRemover.getEsquerdo() == null || noParaRemover.getDireito() == null) {
             Node<T> substituto = noParaRemover;
-            if (noParaRemover.getEsquerda() != null) {
-                substituto = noParaRemover.getEsquerda();
+            if (noParaRemover.getEsquerdo() != null) {
+                substituto = noParaRemover.getEsquerdo();
             } else {
-                substituto = noParaRemover.getDireita();
+                substituto = noParaRemover.getDireito();
             }
 
             if (substituto != null) {
@@ -116,10 +119,10 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
 
             if (noParaRemover.getPai() == null) {
                 raiz = substituto;
-            } else if (noParaRemover == noParaRemover.getPai().getEsquerda()) {
-                noParaRemover.getPai().setEsquerda(substituto);
+            } else if (noParaRemover == noParaRemover.getPai().getEsquerdo()) {
+                noParaRemover.getPai().setEsquerdo(substituto);
             } else {
-                noParaRemover.getPai().setDireita(substituto);
+                noParaRemover.getPai().setDireito(substituto);
             }
 
             if (!noParaRemover.isCor()) {
@@ -135,9 +138,9 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
 
     // Método para obter o sucessor de um nó
     private Node<T> obterSucessor(Node<T> no) {
-        Node<T> atual = no.getDireita();
-        while (atual.getEsquerda() != null) {
-            atual = atual.getEsquerda();
+        Node<T> atual = no.getDireito();
+        while (atual.getEsquerdo() != null) {
+            atual = atual.getEsquerdo();
         }
         return atual;
     }
@@ -145,58 +148,58 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
     // Método para balancear a árvore após a remoção
     @Override
     public void balancearAposRemocao(Node<T> no) {
-        while (no != root && !no.isCor()) {
-            if (no == no.getPai().getEsquerda()) {
-                Node<T> irmao = no.getPai().getDireita();
+        while (no != raiz && !no.isCor()) {
+            if (no == no.getPai().getEsquerdo()) {
+                Node<T> irmao = no.getPai().getDireito();
                 if (irmao.isCor()) {
                     irmao.setCor(false);
                     no.getPai().setCor(true);
                     rotacionarEsquerda(no.getPai());
-                    irmao = no.getPai().getDireita();
+                    irmao = no.getPai().getDireito();
                 }
 
-                if (!irmao.getEsquerda().isCor() && !irmao.getDireita().isCor()) {
+                if (!irmao.getEsquerdo().isCor() && !irmao.getDireito().isCor()) {
                     irmao.setCor(true);
                     no = no.getPai();
                 } else {
-                    if (!irmao.getDireita().isCor()) {
-                        irmao.getEsquerda().setCor(false);
+                    if (!irmao.getDireito().isCor()) {
+                        irmao.getEsquerdo().setCor(false);
                         irmao.setCor(true);
                         rotacionarDireita(irmao);
-                        irmao = no.getPai().getDireita();
+                        irmao = no.getPai().getDireito();
                     }
 
                     irmao.setCor(no.getPai().isCor());
                     no.getPai().setCor(false);
-                    irmao.getDireita().setCor(false);
+                    irmao.getDireito().setCor(false);
                     rotacionarEsquerda(no.getPai());
-                    no = root;
+                    no = raiz;
                 }
             } else {
-                Node<T> irmao = no.getPai().getEsquerda();
+                Node<T> irmao = no.getPai().getEsquerdo();
                 if (irmao.isCor()) {
                     irmao.setCor(false);
                     no.getPai().setCor(true);
                     rotacionarDireita(no.getPai());
-                    irmao = no.getPai().getEsquerda();
+                    irmao = no.getPai().getEsquerdo();
                 }
 
-                if (!irmao.getDireita().isCor() && !irmao.getEsquerda().isCor()) {
+                if (!irmao.getDireito().isCor() && !irmao.getEsquerdo().isCor()) {
                     irmao.setCor(true);
                     no = no.getPai();
                 } else {
-                    if (!irmao.getEsquerda().isCor()) {
-                        irmao.getDireita().setCor(false);
+                    if (!irmao.getEsquerdo().isCor()) {
+                        irmao.getDireito().setCor(false);
                         irmao.setCor(true);
                         rotacionarEsquerda(irmao);
-                        irmao = no.getPai().getEsquerda();
+                        irmao = no.getPai().getEsquerdo();
                     }
 
                     irmao.setCor(no.getPai().isCor());
                     no.getPai().setCor(false);
-                    irmao.getEsquerda().setCor(false);
+                    irmao.getEsquerdo().setCor(false);
                     rotacionarDireita(no.getPai());
-                    no = root;
+                    no = raiz;
                 }
             }
         }
@@ -204,75 +207,60 @@ public class RedBlackTree<T extends Comparable<T>> extends AbstractBinarySearchT
     }
 
     // Método de rotação à esquerda
-    @Override
     public void rotacionarEsquerda(Node<T> no) {
-        Node<T> novoRaiz = no.getDireita();
-        no.setDireita(novoRaiz.getEsquerda());
+        Node<T> novoRaiz = no.getDireito();
+        no.setDireito(novoRaiz.getEsquerdo());
 
-        if (novoRaiz.getEsquerda() != null) {
-            novoRaiz.getEsquerda().setPai(no);
+        if (novoRaiz.getEsquerdo() != null) {
+            novoRaiz.getEsquerdo().setPai(no);
         }
 
         novoRaiz.setPai(no.getPai());
 
         if (no.getPai() == null) {
-            root = novoRaiz;
-        } else if (no == no.getPai().getEsquerda()) {
-            no.getPai().setEsquerda(novoRaiz);
+            raiz = novoRaiz;
+        } else if (no == no.getPai().getEsquerdo()) {
+            no.getPai().setEsquerdo(novoRaiz);
         } else {
-            no.getPai().setDireita(novoRaiz);
+            no.getPai().setDireito(novoRaiz);
         }
 
-        novoRaiz.setEsquerda(no);
+        novoRaiz.setEsquerdo(no);
         no.setPai(novoRaiz);
     }
 
     // Método de rotação à direita
-    @Override
     public void rotacionarDireita(Node<T> no) {
-        Node<T> novoRaiz = no.getEsquerda();
-        no.setEsquerda(novoRaiz.getDireita());
+        Node<T> novoRaiz = no.getEsquerdo();
+        no.setEsquerdo(novoRaiz.getDireito());
 
-        if (novoRaiz.getDireita() != null) {
-            novoRaiz.getDireita().setPai(no);
+        if (novoRaiz.getDireito() != null) {
+            novoRaiz.getDireito().setPai(no);
         }
 
         novoRaiz.setPai(no.getPai());
 
         if (no.getPai() == null) {
-            root = novoRaiz;
-        } else if (no == no.getPai().getDireita()) {
-            no.getPai().setDireita(novoRaiz);
+            raiz = novoRaiz;
+        } else if (no == no.getPai().getDireito()) {
+            no.getPai().setDireito(novoRaiz);
         } else {
-            no.getPai().setEsquerda(novoRaiz);
+            no.getPai().setEsquerdo(novoRaiz);
         }
 
-        novoRaiz.setDireita(no);
+        novoRaiz.setDireito(no);
         no.setPai(novoRaiz);
     }
 
     // Método para buscar um valor na árvore
     @Override
     public boolean buscar(T dado) {
-        return buscarNo(root, dado) != null;
-    }
-
-    // Método auxiliar para buscar um valor na árvore
-    private Node<T> buscarNo(Node<T> raiz, T dado) {
-        if (raiz == null || dado.compareTo(raiz.getDado()) == 0) {
-            return raiz;
-        }
-
-        if (dado.compareTo(raiz.getDado()) < 0) {
-            return buscarNo(raiz.getEsquerda(), dado);
-        } else {
-            return buscarNo(raiz.getDireita(), dado);
-        }
+        return buscarNoAux(raiz, dado) != null;
     }
 
     // Método para imprimir a árvore (opcional para visualização)
     public void imprimirArvore() {
-        imprimirArvore(root, "", true);
+        imprimirArvore(raiz, "", true);
     }
 
     private void imprimirArvore(Node<T> no, String indentacao, boolean ultimaPosicao) {

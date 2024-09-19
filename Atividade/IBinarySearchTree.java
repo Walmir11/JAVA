@@ -1,3 +1,5 @@
+package Atividade;
+
 public interface IBinarySearchTree<T extends Comparable<T>> {
 
     // Método para inserir um dado na árvore
