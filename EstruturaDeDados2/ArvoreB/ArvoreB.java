@@ -23,16 +23,16 @@ public class ArvoreB {
                 if (s.getChaves()[0] < chave) {
                     i++;
                 }
-                inserirNaoCheio(s.getFilhos()[i], chave);
+                inserirNoCheio(s.getFilhos()[i], chave);
                 raiz = s;
             } else {
-                inserirNaoCheio(raiz, chave);
+                inserirNoCheio(raiz, chave);
             }
         }
     }
 
     // Função auxiliar para inserir em um nó não cheio
-    private void inserirNaoCheio(NoB noAtual, int chave) {
+    private void inserirNoCheio(NoB noAtual, int chave) {
         int i = noAtual.getNumChaves() - 1;
 
         if (noAtual.isFolha()) {
@@ -52,7 +52,7 @@ public class ArvoreB {
                     i++;
                 }
             }
-            inserirNaoCheio(noAtual.getFilhos()[i + 1], chave);
+            inserirNoCheio(noAtual.getFilhos()[i + 1], chave);
         }
     }
 
@@ -112,7 +112,7 @@ public class ArvoreB {
             if (noAtual.isFolha()) {
                 removerDeFolha(noAtual, idx);
             } else {
-                removerDeNaoFolha(noAtual, idx);
+                removerDeNoFolha(noAtual, idx);
             }
         } else {
             if (noAtual.isFolha()) {
@@ -141,7 +141,7 @@ public class ArvoreB {
     }
 
     // Remover uma chave de um nó não folha
-    private void removerDeNaoFolha(NoB noAtual, int idx) {
+    private void removerDeNoFolha(NoB noAtual, int idx) {
         int chave = noAtual.getChaves()[idx];
         if (noAtual.getFilhos()[idx].getNumChaves() >= t) {
             int pred = getPredecessor(noAtual, idx);

@@ -32,7 +32,7 @@ public class ArvoreBMais {
     }
 
     // Método privado para inserir em um nó não cheio
-    private void inserirNaoCheio(NoBMais no, int chave) {
+    private void inserirNoCheio(NoBMais no, int chave) {
         if (no.isFolha()) {
             no.getChaves().add(chave);
             Collections.sort(no.getChaves());
@@ -50,7 +50,7 @@ public class ArvoreBMais {
                     pos++;
                 }
             }
-            inserirNaoCheio(no.getFilhos().get(pos), chave);
+            inserirNoCheio(no.getFilhos().get(pos), chave);
         }
     }
 
@@ -61,10 +61,10 @@ public class ArvoreBMais {
             NoBMais novoNo = new NoBMais(false);
             novoNo.getFilhos().add(raiz);
             dividirNo(raiz, novoNo, 0);
-            inserirNaoCheio(novoNo, chave);
+            inserirNoCheio(novoNo, chave);
             raiz = novoNo;
         } else {
-            inserirNaoCheio(r, chave);
+            inserirNoCheio(r, chave);
         }
     }
 
